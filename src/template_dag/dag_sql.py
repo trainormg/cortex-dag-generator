@@ -39,7 +39,7 @@ with airflow.DAG("CDC_BigQuery_${base_table}",
         task_id='merge_query_records',
         sql="${query_file}",
         create_disposition='CREATE_IF_NEEDED',
-        bigquery_conn_id="sap_cdc_bq",
+        bigquery_conn_id="bigquery_default",
         use_legacy_sql=False)
     stop_task = DummyOperator(task_id="stop")
     start_task >> copy_records >> stop_task
