@@ -136,7 +136,8 @@ AS (
           AS rn
       FROM
         `bigquery-public-data.noaa_global_forecast_system.NOAA_GFS0P25` AS G CROSS JOIN UNNEST(G.forecast) AS F
-        INNER JOIN sap-prj-caf8a4ad.CDC_PROCESSED.postcode AS P
+        -- INNER JOIN sap-prj-caf8a4ad.CDC_PROCESSED.postcode AS P
+        INNER JOIN {{ project_id_src }}.{{ dataset_cdc_processed }}.postcode AS P
           ON ST_WITHIN(ST_GEOGFROMTEXT(P.centroid), G.geography_polygon)
       WHERE
         -- Always use latest data set from NOAA for forecast data.
